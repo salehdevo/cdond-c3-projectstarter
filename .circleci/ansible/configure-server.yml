@@ -1,4 +1,4 @@
-[200~---
+---
 
 - name: "configuration play." 
   hosts: web
