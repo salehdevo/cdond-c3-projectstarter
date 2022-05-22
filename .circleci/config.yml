@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:16.13.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -15,7 +15,7 @@ jobs:
 
   build-backend:
     docker:
-            - image: cimg/node:13.8.0
+            - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -26,7 +26,7 @@ jobs:
              npm run build
   test-frontend:
     docker:
-      - image: circleci/node:16.3.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -37,7 +37,7 @@ jobs:
             npm run test
   test-backend:
     docker:
-      - image: circleci/node:16.3.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -49,7 +49,7 @@ jobs:
 
   scan-frontend:
     docker:
-      - image: circleci/node:13.9.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -57,11 +57,10 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm audit --audit-level=critical
             npm audit fix --audit-level=critical --force
   scan-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -70,18 +69,17 @@ jobs:
             cd backend
             npm install
             npm audit fix --force --audit-level=critical
-            #    npm audit --audit-level=critical
 
 workflows:
   default:
     jobs:
-            #      - build-frontend
+      - build-frontend
       - build-backend
-        #   - test-frontend:
-        #  requires: [build-frontend]
-        #   - test-backend:
-        # requires: [build-backend]
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
       - scan-backend:
           requires: [build-backend]
-          #   - scan-frontend:
-          # requires: [build-frontend]          
+      - scan-frontend:
+          requires: [build-frontend]          
