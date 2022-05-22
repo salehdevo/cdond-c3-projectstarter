@@ -1,6 +1,8 @@
 version: 2.1
 orbs: 
   slack: circleci/slack@4.10.1
+  aws-cli: circleci/aws-cli@1.3.0
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID
@@ -128,15 +130,18 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: python:3.7-alpine3.11        
     steps:
       - checkout
-      - install_awscli
-      - install_ansible
       - add_ssh_keys:
           fingerprints: ["4d:6f:16:49:ee:ae:e4:67:e7:97:aa:4a:b5:27:60:82"]
       - attach_workspace:
           at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            pip install awscli
+            apk add --update ansible          
       - run:
           name: Configure Server
           command: |
