@@ -15,7 +15,7 @@ jobs:
 
   build-backend:
     docker:
-            - image: circleci/node:13.9.0
+            - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -61,7 +61,7 @@ jobs:
             npm audit fix --audit-level=critical --force
   scan-backend:
     docker:
-      - image: circleci/node:13.9.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
