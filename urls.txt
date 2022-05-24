@@ -1,0 +1,6 @@
+[URL01]
+https://github.com/salehdevo/cdond-c3-projectstarter
+[URL02]
+http://udapeople-757bf76.s3.us-west-2.amazonaws.com/index.html
+[Distribution domain name]
+http://dlr7rcp3mnct1.cloudfront.net
